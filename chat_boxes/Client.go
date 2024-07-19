@@ -72,7 +72,7 @@ func conditionSelectData(db *sql.DB, name string) (string, error) {
 		if err != nil {
 			return "err", err
 		}
-		fmt.Println(password)
+		//fmt.Println(password)
 		return password, nil
 	} else {
 		return "No user information!", nil
@@ -253,15 +253,14 @@ mi:
 	onlineSet(db, true, name)
 
 	//登录成功后将用户名传给客户端用于记录在线用户信息
-
 	arr := ClientE(db, name)
 	onlineSet(db, false, name)
 	if !arr {
 		fmt.Println("您已下线！")
 	}
-
 }
 
+// 打印帮助
 func help() {
 	fmt.Println("退出:	\\q")
 	fmt.Println("修改姓名：	\\rN")
@@ -330,7 +329,7 @@ func rP(db *sql.DB) {
 func accept(conn net.Conn) {
 	for {
 		//创建字节数组
-		buf := [512]byte{}
+		buf := [1024]byte{}
 		//读取回应的信息
 		n, err := conn.Read(buf[:])
 		if err != nil && err != io.EOF {
@@ -429,7 +428,7 @@ func ClientE(db *sql.DB, name string) bool {
 			rP(db)
 		case "\\file":
 			//发送文件
-			_, err = conn.Write([]byte(aim + "\\file"))
+			_, err = conn.Write([]byte(aim + "\\"))
 			//错误处理
 			if err != nil {
 				return true
@@ -508,9 +507,9 @@ func sendFile(filePath string, conn net.Conn) {
 	// 循环处理
 	for {
 		n, err := file.Read(buffer) // 本地读取文件，按字节
-		if err != nil {
-			// 注意：读取完成时，会读取到EOF文件结束标志，错误标志置位为“EOF”，需要进行额外判断
-			if err == io.EOF {
+		if err != nil || n == 0 {
+			// 读取完成时，会读取到EOF文件结束标志，错误标志置位为“EOF”，需要进行额外判断
+			if err == io.EOF || n == 0 {
 				//将文件读取结束的消息发送过去
 				fmt.Println("发送完成:", err)
 			} else {

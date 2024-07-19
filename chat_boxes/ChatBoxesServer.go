@@ -70,7 +70,8 @@ func info(conn net.Conn) string {
 }
 
 // 接受文件
-func recvFile(fileName string, conn net.Conn, serveConn net.Conn) {
+func recvFile(fileName string, serveConn net.Conn) {
+
 	file, err := os.Create(fileName) // 在当前路径下创建文件
 	// 返回File类型
 	if err != nil {
@@ -100,10 +101,6 @@ func recvFile(fileName string, conn net.Conn, serveConn net.Conn) {
 			}
 			return
 		}
-		//if readCount1 == 0 {
-		//	return
-		//}
-
 		//fmt.Println(string(buffer[:readCount]))
 		_, err = file.Write(buffer[:readCount1])
 		if err != nil {
@@ -123,9 +120,9 @@ func Info(user Client) bool {
 		if aim == "\\q" {
 			//退出
 			return true
-		} else if strings.Contains(aim, "\\file") {
+		} else if strings.Contains(aim, "\\") {
 			//发送文件
-			aim = strings.Trim(aim, "\\file")
+			aim = strings.Trim(aim, "\\")
 			fmt.Println(aim)
 			//接收文件名
 			buffer := make([]byte, 1024)
@@ -145,19 +142,16 @@ func Info(user Client) bool {
 				return true
 			}
 
-			//recvFile(fileName, OnlineMap[aim].Conn, user.Conn)
-			//Message <- "收到一份文件\n"
-
+			recvFile(fileName, user.Conn)
 			//接收文件内容
 			if aim == "all" {
+
 				for name, usern := range OnlineMap {
 					if name != user.Username {
-						recvFile(fileName, usern.Conn, user.Conn)
-						user.Channel <- "收到一份文件\n"
+						usern.Channel <- "收到一份文件\n"
 					}
 				}
 			} else {
-				recvFile(fileName, OnlineMap[aim].Conn, user.Conn)
 				OnlineMap[aim].Channel <- "收到一份文件\n"
 			}
 			continue
@@ -220,7 +214,6 @@ func process(conn net.Conn) {
 		//删除在线用户记录
 		delete(OnlineMap, name)
 		Message <- Make3Msg(OnlineMap)
-
 		return
 	}
 }
