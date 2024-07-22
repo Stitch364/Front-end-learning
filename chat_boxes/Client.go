@@ -3,6 +3,7 @@ package main
 import (
 	. "Share"
 	"bufio"
+	"crypto/md5"
 	"database/sql"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
@@ -79,6 +80,12 @@ func conditionSelectData(db *sql.DB, name string) (string, error) {
 	}
 }
 
+// MD5StrSalted 加盐（固定值）加密 413814
+func MD5StrSalted(password []byte) (string, error) {
+	salt := []byte("413814")
+	return fmt.Sprintf("%x", md5.Sum(append(salt, password...))), nil
+}
+
 // 查询用户在线状态
 func online(db *sql.DB, name string) bool {
 	query := "SELECT online FROM users WHERE name = ?"
@@ -123,7 +130,12 @@ func onlineSet(db *sql.DB, online bool, name string) {
 func updatePaData(db *sql.DB, name string, newPassword string) error {
 	query := "UPDATE users SET password = ? WHERE name = ?"
 
-	_, err := db.Exec(query, newPassword, name)
+	Md5Password, err := MD5StrSalted([]byte(newPassword))
+	if err != nil {
+		fmt.Println("MD5StrSalted err")
+		return err
+	}
+	_, err = db.Exec(query, Md5Password, name)
 	if err != nil {
 		return err
 	}
@@ -194,8 +206,13 @@ func register(db *sql.DB) {
 		}
 	}
 
+	Md5password, err := MD5StrSalted([]byte(password))
+	if err != nil {
+		fmt.Println("MD5StrSalted err")
+		return
+	}
 	//插入数据
-	err := insertData(db, name, password)
+	err = insertData(db, name, Md5password)
 	//错误处理
 	if err != nil {
 		fmt.Println("Error inserting data")
@@ -224,8 +241,12 @@ mi:
 	if err != nil {
 		fmt.Println("Read err")
 	}
-	passwordTemp = string(res2)
-
+	passwordTemp, err = MD5StrSalted(res2)
+	if err != nil {
+		fmt.Println("MD5StrSalted err")
+		return
+	}
+	//数据库查找密码
 	password, err := conditionSelectData(db, name)
 	if err != nil {
 		fmt.Println("Condition select error")
@@ -384,7 +405,8 @@ func ClientE(db *sql.DB, name string) bool {
 
 		informationTemp := string(res)
 		information = strings.Trim(informationTemp, "\r\n")
-		time.Sleep(1 * time.Second)
+
+		//time.Sleep(1 * time.Second)
 		switch information {
 		case "@":
 			//切换聊天对象

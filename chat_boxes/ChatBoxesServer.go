@@ -10,10 +10,10 @@ import (
 	"strings"
 )
 
-// 创建在线成员map
+// OnlineMap 创建在线成员map
 var OnlineMap = make(map[string]Client)
 
-// 创建全局通道
+// Message 创建全局通道
 var Message = make(chan string) //用于全局通信
 
 // 客户端监听自己的通道
@@ -24,7 +24,13 @@ func listenMessage(cl Client) {
 		//发送给客户端
 		_, err := cl.Conn.Write([]byte(msg))
 		if err != nil {
+			//conn被提前关闭
 			fmt.Println("Write Error:", err)
+			//err := cl.Conn.Close()
+			//if err != nil {
+			//	fmt.Println("Close Error:", err)
+			//	return
+			//}
 			return
 		} // 发送数据
 	}
@@ -47,6 +53,7 @@ func broadcast() {
 }
 
 // 接收用户名（接收信息）
+// 接收用户端传来的消息
 func info(conn net.Conn) string {
 
 	var buf [1024]byte
@@ -60,10 +67,10 @@ func info(conn net.Conn) string {
 	}
 	//n为读取到的字节数
 	//转换为string类型
+
 	if n != 0 {
 		nameTemp := string(buf[:n])
 		name := strings.Trim(nameTemp, "\r\n")
-
 		return name
 	}
 	return ""
@@ -113,7 +120,7 @@ func recvFile(fileName string, serveConn net.Conn) {
 	}
 }
 
-// 循环接收并处理消息
+// Info 循环接收并处理消息
 func Info(user Client) bool {
 	for {
 		aim := info(user.Conn)
@@ -160,7 +167,11 @@ func Info(user Client) bool {
 			delete(OnlineMap, user.Username)
 			user.Username = Newname
 			OnlineMap[Newname] = user
+			continue
 		}
+
+		//bug：如果连续输入两个回车，会将aim捕获到information里
+		//导致发送 aim信息 给目标用户
 		information := info(user.Conn)
 		if aim == "all" {
 			//广播
@@ -196,8 +207,16 @@ func process(conn net.Conn) {
 	//写入在线用户map
 	OnlineMap[user.Username] = user
 
+	////创建监听用户活跃的channel
+	//live := make(chan bool)
+
+	////用户主动下线的chan
+	//offline := make(chan bool)
+
 	//持续监听用户自己的通道
+	//循环不会停
 	go listenMessage(user)
+
 	//广播用户上线消息给所有在线用户
 	//广播上线消息
 	Message <- Make0Msg(user)
@@ -209,10 +228,11 @@ func process(conn net.Conn) {
 	//判断聊天是否结束
 	if q {
 		//下线
-		//通知所有用户
+		//广播下线消息
 		Message <- Make00Msg(user)
 		//删除在线用户记录
-		delete(OnlineMap, name)
+		delete(OnlineMap, user.Username)
+		//广播当前在线人数
 		Message <- Make3Msg(OnlineMap)
 		return
 	}
