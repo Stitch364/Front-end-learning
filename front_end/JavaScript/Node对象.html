@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Node对象</title>
+</head>
+<body>
+    <div id="d1">
+      <div id="d2">d2</div>
+      d1
+    </div>
+<!--    将超链接设置为类似按钮一样的功能-->
+    <a href="javascript:void(0)" id="a1">删除子节点d2</a>
+    <a href="javascript:void(0)" id="a2">添加子节点d3</a>
+    <script>
+      //为父节点删除子节点
+
+      //获取a1超链接
+      var a1 = document.getElementById("a1")
+      //绑定点击事件
+      a1.onclick = function (){
+        //获取d1，d2
+        var d1 = document.getElementById("d1")
+        var d2 = document.getElementById("d2")
+        //删除d1的子节点d2
+        d1.removeChild(d2)
+      }
+
+      //为父节点后添加一个子节点
+
+      //获取a1超链接
+      //绑定点击事件
+      a2.onclick = function (){
+        //创建一个div对象
+        var d3 = document.createElement("div")
+        //设置属性id为div3
+        d3.setAttribute("id","div3")
+        //更改文本为d3
+        d3.innerHTML = "d3"
+
+        //获取d1父节点
+        var d1 = document.getElementById("d1")
+        //为di后添加子节点d3
+        d1.appendChild(d3)
+      }
+    </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>定时器</title>
+</head>
+<body>
+    <script>
+        function fun(){
+            alert("boooooooooooom")
+        }
+        //3秒后弹窗
+        // setTimeout(func,3000)
+        var boom
+        //每一秒弹窗一次
+        boom = setInterval(fun,1000)
+        //清除上面的设置
+        clearInterval(boom)
+    </script>
+</body>
+</html>

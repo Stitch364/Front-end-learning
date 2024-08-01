@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自动跳转</title>
+    <style>
+        p{
+            text-align: center;
+        }
+        #time{
+            color: #ff2929;/*红色*/
+        }
+
+    </style>
+</head>
+<body>
+    <p>
+        <span id="time">5</span>秒后，自动跳转到首页...
+    </p>
+    <script>
+        //定义倒计时变量
+        var t = 5
+        //获取time对象
+        var n = document.getElementById("time")
+        function time(){
+            t--
+            if(t===0){
+                //清除定时器
+                clearInterval(n1)
+                // //打开新的窗口
+                // open("https://www.zhongguose.com/")
+                //跳转到新地址
+                location.href = "https://www.zhongguose.com/"
+            }
+            //修改时间内容
+            n.innerHTML=t
+        }
+        //设置每一秒调用一次
+        var n1= setInterval(time,1000)
+    </script>
+</body>
+</html>

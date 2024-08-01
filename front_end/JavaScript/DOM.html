@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM</title>
+    <style>
+        #p1{
+            color: #2376b7;
+        }
+    </style>
+</head>
+<body>
+    <a>点击</a><br>
+    <input id="but" type="button" value="设置属性">
+    <script>
+        //获取按钮对象
+        var but = document.getElementById("but")
+        //绑定点击事件
+        but.onclick = function (){
+            //事件内容
+            //获取第一个标签为a的对象
+            var element_a =document.getElementsByTagName("a")[0]
+            //更改其属性
+            element_a.setAttribute("href","https://www.zhongguose.com/")
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+/*CSS文件*/
+
+/*!*元素选择器*!*/
+/*div{*/
+/*    color: aqua;*/
+/*}*/
+/*!*id选择器*!*/
+/*#a1{*/
+/*    color: #fc0d29;*/
+/*}*/
+/*!*类型选择器*!*/
+/*.cla{*/
+/*    color: #53dc5a;*/
+/*}*/
+/*!*选择所有元素*!*/
+/**{*/
+/*    color: #3694ef;*/
+/*}*/
+
+/*并集*/
+/*#a1,.cla{*/
+/*    color: #44aaea;*/
+/*}*/
+
+/*父级*/
+/*div > p{*/
+/*    color: red;*/
+/*}*/
+/*属性选择器*/
+/*input[type='text']{*/
+/*    color:red;*/
+/*}*/
+/*属性*/
+p{
+    /*颜色*/
+    color: #3694ef;
+    /*字体大小*/
+    font-size: 30px;
+    /*对其方式*/
+    text-align: center;
+    /*行高*/
+    line-height: 60px;
+    /*框*/
+    border: 2px solid rgb(206, 25, 25);
+}
+
+
+div{
+    /*框*/
+    /*border: 1px solid red;*/
+    height: 540px;
+    width: 970px;
+    /*背景*/
+    background-color: rgba(248, 223, 114, 0.56);
+}
+
+/*伪类选择器*/
+a:link{
+    color: blue;
+}
+
+/*a:visited{*/
+/*    color: #5e5b5b;*/
+/*}*/
+
+/*a:active{*/
+/*    color: brown;*/
+/*}*/
+
+a:hover{
+    color: #ff2929;
+}

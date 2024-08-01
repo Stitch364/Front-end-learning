@@ -1,0 +1,56 @@
+/*总体的框*/
+.layout{
+    border: 3px rgba(143, 143, 143, 0.64) solid;
+    width: 800px;
+    height: 450px;
+    /*margin-left: 150px;*/
+    padding: 15px;
+    /*水平居中*/
+    margin:auto;
+    margin-top: 50px;
+    background-color: #ffffff;
+    Box-sizing:border-box;
+}
+/*左边的字*/
+.left{
+    /*border: 1px rgba(229, 48, 48, 0.64) solid;*/
+    float: left;
+}
+/*中间填写信息部分*/
+.center{
+    /*border: 1px rgba(227, 38, 38, 0.64) solid;*/
+    line-height: 2.4;
+    margin-left: 130px;
+    float: left;
+}
+/*右边部分*/
+.right{
+    font-size: 12px;
+    /*border: 1px rgba(229, 45, 45, 0.64) solid;*/
+    float: right;
+}
+/*中间部分的左部*/
+.td_left{
+    font-size: 15px;
+}
+/*右部*/
+.td_right{
+    padding: 5px;
+    font-size: 15px;
+    /*border: 1px solid rgb(206, 25, 25);*/
+}
+/*填写信息的框*/
+#username,#cell-phone-number,#num,#data,#Email,#password,#name{
+    height:28px;
+    border: 1px solid #5e5b5b;
+    /*设置边框圆角*/
+    border-radius: 5px;
+
+}
+/*右边登录链接*/
+a:link{
+    color: #f3678a;
+}
+a:hover{
+    color: #fff430;
+}

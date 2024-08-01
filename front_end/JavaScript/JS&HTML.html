@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS&HTML</title>
+<!--    弹窗，可以写在任意位置-->
+
+<!--    <script src="a.js">-->
+<!--        // alert("Hello World!");-->
+<!--    </script>-->
+    <script>
+        var a =1;
+        // 输出到页面上
+        document.write(a+"---"+typeof(a)+"<br>");
+        // 定义string类型
+        var str ="hello"
+        document.write(str+"---"+typeof(str)+"<br>");
+
+        //计算和并弹窗
+        function fun(){
+            var i =0
+            var num=0
+            while(i<arguments.length){
+                num+=arguments[i]
+                i++
+            }
+            alert(num)
+        }
+        alert("hello world!")
+        fun(1,2,3,4,5)
+    </script>
+
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>location</title>
+</head>
+<body>
+    <input type="button" value="刷新页面" id="F5">
+
+    <script>
+
+        var f5 =document.getElementById("F5")
+        //绑定点击操作
+        f5.onclick=function () {
+            //执行刷新页面
+            location.reload()
+        }
+        //弹窗：页面地址
+        alert(location.href)
+    </script>
+
+</body>
+</html>

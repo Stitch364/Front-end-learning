@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图</title>
+</head>
+<body>
+    <img id="Sekiro" src="../Sekiro1.jpg" alt="Sekiro" width="768" height="432">
+    <br>
+<!--    刷新页面-->
+    <input type="button" value="刷新页面" id="F5">
+    <script>
+        var f5 =document.getElementById("F5")
+        f5.onclick=function () {
+            location.reload()
+        }
+    </script>
+
+    <script>
+        var Sekiro = document.getElementById("Sekiro")
+        var t = 1
+        function fun(){
+            t++
+            if(t>3){
+                t=1
+            }
+            Sekiro.src="../Sekiro"+ t + ".jpg"
+        }
+        setInterval(fun,2000)
+    </script>
+</body>
+</html>

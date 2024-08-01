@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>简单事件，窗口</title>
+    <style>
+        #GO{
+            height: 80px;
+            width: 80px;
+        }
+    </style>
+</head>
+<body>
+    <img id="GO" src="../go.ico" alt="GO"><br>
+
+    <input id="open" type="button" value="打开"><br>
+
+    <input id="close1" type="button" value="关闭">
+    <script>
+        var aaa
+        function func1() {
+            ////弹窗
+            //alert('enter go!')
+            ////弹窗（选择确认（返回true）和取消（返回false））
+            //confirm("GO!")
+            prompt("CS","GO")
+        }
+        function func2() {
+            ////弹窗
+            aaa=open("https://www.zhongguose.com/")
+        }
+
+
+        //获取GO
+        var GO =document.getElementById("GO")
+        // 点击GO执行func1
+        GO.onclick=func1
+
+        // 获取按钮open给open1，绑定点击则执行func2的操作
+        var open1 = document.getElementById("open")
+       open1.onclick = func2
+
+        //关闭浏览器窗口
+        var close1 = document.getElementById("close1")
+        close1.onclick= function(){
+            aaa.close()
+        }
+
+
+    </script>
+
+
+
+</body>
+</html>
